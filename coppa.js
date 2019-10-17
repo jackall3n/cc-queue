@@ -4,10 +4,17 @@ const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync('db.json');
 const db = low(adapter);
+const { _, ...argv} = require('minimist')(process.argv.slice(2), {
+    default: {
+        count: 1,
+        delay: 5000
+    }
+});
+
+console.log(argv);
 
 db.defaults({ queues: [] })
-    .write()
-
+    .write();
 
 const queueUrl = "https://coppaclub.queue-it.net/?c=coppaclub&e=towerbridgeigloos&cid=en-GB&l=Igloos%2520TB%2520October%25202019";
 const statusUrl = (id) => `https://coppaclub.queue-it.net/queue/coppaclub/towerbridgeigloos/${id}/GetStatus?cid=en-GB&l=Igloos%20TB%20October%202019`;
@@ -86,4 +93,7 @@ const updateEmail = async (id) => {
     console.log(response);
 };
 
-Array.from(new Array(1)).map( () => get());
+Array.from(new Array(argv.count)).forEach(async () => {
+    await get();
+    await delay(argv.delay);
+});
