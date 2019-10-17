@@ -22,7 +22,7 @@ const joinQueue = async () => {
     const { data } = response;
     const $ = cheerio.load(data);
 
-    console.log(data);
+    // console.log(data);
 
     return $('#hlLinkToQueueTicket2').text();
 };
@@ -45,8 +45,8 @@ const get = async () => {
     try {
         const status = await getStatus(id);
 
-        queueNumber = status.ticket;
-        usersInLineAheadOfYou = status.ticket;
+        queueNumber = status.ticket.queueNumber;
+        usersInLineAheadOfYou = status.ticket.usersInLineAheadOfYou;
     }
     catch (error) {
         console.log('failed to validate');
