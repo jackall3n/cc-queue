@@ -94,6 +94,6 @@ const updateEmail = async (id) => {
 };
 
 Array.from(new Array(argv.count)).forEach(async () => {
-    await get();
     await delay(argv.delay);
+    await get();
 });

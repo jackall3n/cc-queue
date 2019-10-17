@@ -8,5 +8,8 @@
     "cheerio": "^1.0.0-rc.3",
     "lowdb": "^1.0.0",
     "minimist": "^1.2.0"
+  },
+  "scripts": {
+    "start" : "node coppa"
   }
 }
