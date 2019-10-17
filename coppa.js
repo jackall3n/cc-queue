@@ -4,7 +4,7 @@ const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync('db.json');
 const db = low(adapter);
-const { _, ...argv} = require('minimist')(process.argv.slice(2), {
+const { _, ...argv } = require('minimist')(process.argv.slice(2), {
     default: {
         count: 1,
         delay: 5000
@@ -38,7 +38,7 @@ const get = async () => {
 
     const id = await joinQueue();
 
-    if(!id) {
+    if (!id) {
         console.log('failed to retrieve id');
 
         return;
@@ -54,8 +54,7 @@ const get = async () => {
 
         queueNumber = status.ticket.queueNumber;
         usersInLineAheadOfYou = status.ticket.usersInLineAheadOfYou;
-    }
-    catch (error) {
+    } catch (error) {
         console.log('failed to validate');
     }
 
@@ -93,7 +92,9 @@ const updateEmail = async (id) => {
     console.log(response);
 };
 
-Array.from(new Array(argv.count)).forEach(async () => {
-    await delay(argv.delay);
-    await get();
-});
+for (let i = 1; i <= argv.count; i++) {
+    setTimeout(async function timer() {
+        console.log('Getting...', i);
+        await get();
+    }, i * argv.delay);
+}
