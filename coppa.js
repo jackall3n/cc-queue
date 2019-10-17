@@ -5,9 +5,11 @@ const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync('db.json');
 const db = low(adapter);
 const { _, ...argv } = require('minimist')(process.argv.slice(2), {
+    boolean: ['status'],
     default: {
         count: 1,
-        delay: 5000
+        delay: 5000,
+        status: false
     }
 });
 
@@ -49,13 +51,15 @@ const get = async () => {
     let queueNumber = -1;
     let usersInLineAheadOfYou = -1;
 
-    try {
-        const status = await getStatus(id);
+    if (argv.status) {
+        try {
+            const status = await getStatus(id);
 
-        queueNumber = status.ticket.queueNumber;
-        usersInLineAheadOfYou = status.ticket.usersInLineAheadOfYou;
-    } catch (error) {
-        console.log('failed to validate');
+            queueNumber = status.ticket.queueNumber;
+            usersInLineAheadOfYou = status.ticket.usersInLineAheadOfYou;
+        } catch (error) {
+            console.log('failed to validate');
+        }
     }
 
     await db.get('queues')
