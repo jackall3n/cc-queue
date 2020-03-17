@@ -7,7 +7,7 @@
     "axios": "^0.19.0",
     "cheerio": "^1.0.0-rc.3",
     "lowdb": "^1.0.0",
-    "minimist": "^1.2.0"
+    "minimist": "^1.2.2"
   },
   "scripts": {
     "start" : "node coppa"
